@@ -45,7 +45,7 @@ export default function LoginPage() {
           <div className="flex items-center justify-center mb-4">
             <PlayCircle className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="heading-lg">Welcome to VioletStream</CardTitle>
+          <CardTitle className="heading-lg">Welcome to Vidora</CardTitle>
           <CardDescription className="body-md">
             Enter your credentials to access your account
           </CardDescription>

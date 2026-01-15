@@ -47,7 +47,7 @@ export default function Navbar({ onMenuToggle }) {
           
           <Link to="/" className="flex items-center gap-2">
             <PlayCircle className="h-8 w-8 text-primary" />
-            <span className="font-bold text-xl hidden sm:inline">VioletStream</span>
+            <span className="font-bold text-xl hidden sm:inline">Vidora</span>
           </Link>
         </div>
 
