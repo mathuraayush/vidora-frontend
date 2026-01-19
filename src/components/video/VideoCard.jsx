@@ -3,25 +3,25 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 function VideoCard({ video }) {
   return (
-    <Link to={`/watch/${video._id}`} className="group">
-      <div className="space-y-2">
+    <Link to={`/watch/${video._id}`} className="block group">
+      <div className="space-y-3">
         {/* Thumbnail */}
-        <div className="relative overflow-hidden rounded-lg">
+        <div className="relative rounded-xl overflow-hidden">
           <img
             src={video.thumbnail}
             alt={video.title}
-            className="w-full aspect-video object-cover group-hover:scale-105 transition"
+            className="w-full aspect-video object-cover group-hover:scale-105 transition-transform"
           />
         </div>
 
         {/* Info */}
         <div className="flex gap-3">
-          <Avatar className="h-9 w-9">
+          <Avatar className="h-9 w-9 mt-1">
             <AvatarImage src={video.owner.avatar} />
           </Avatar>
 
-          <div className="space-y-1">
-            <h3 className="font-medium leading-snug line-clamp-2">
+          <div>
+            <h3 className="font-semibold leading-snug line-clamp-2">
               {video.title}
             </h3>
 

@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { videoAPI } from "@/services/video.service";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 function UploadVideo() {
   const [title, setTitle] = useState("");
@@ -20,11 +22,18 @@ function UploadVideo() {
   const [thumbnail, setThumbnail] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [videoPreview, setVideoPreview] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!videoFile || !thumbnail) {
-      alert("Please upload both video and thumbnail");
+      toast.error("Missing files", {
+        description: "Please upload both video and thumbnail",
+      });
       return;
     }
 
@@ -38,9 +47,18 @@ function UploadVideo() {
     try {
       setLoading(true);
       await videoAPI.uploadVideo(formData);
-      alert("Video uploaded successfully 🎉");
+
+      toast.success("Video uploaded successfully 🎉", {
+        description: "Redirecting to your videos...",
+      });
+
+      setTimeout(() => {
+        navigate("/your-videos");
+      }, 1200);
     } catch {
-      alert("Upload failed");
+      toast.error("Upload failed", {
+        description: "Please try again",
+      });
     } finally {
       setLoading(false);
     }
@@ -97,34 +115,50 @@ function UploadVideo() {
             </div>
 
             {/* MEDIA */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <h3 className="font-medium">Media</h3>
 
+              {/* VIDEO */}
               <div className="space-y-2">
                 <Label>Video File</Label>
                 <Input
                   type="file"
                   accept="video/*"
-                  onChange={(e) => setVideoFile(e.target.files[0])}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    setVideoFile(file);
+                    setVideoPreview(URL.createObjectURL(file));
+                  }}
                 />
-                {videoFile && (
-                  <p className="text-xs text-muted-foreground">
-                    Selected: {videoFile.name}
-                  </p>
+
+                {videoPreview && (
+                  <video
+                    src={videoPreview}
+                    controls
+                    className="mt-2 rounded-lg w-full"
+                  />
                 )}
               </div>
 
+              {/* THUMBNAIL */}
               <div className="space-y-2">
                 <Label>Thumbnail</Label>
                 <Input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setThumbnail(e.target.files[0])}
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    setThumbnail(file);
+                    setThumbnailPreview(URL.createObjectURL(file));
+                  }}
                 />
-                {thumbnail && (
-                  <p className="text-xs text-muted-foreground">
-                    Selected: {thumbnail.name}
-                  </p>
+
+                {thumbnailPreview && (
+                  <img
+                    src={thumbnailPreview}
+                    alt="Thumbnail preview"
+                    className="mt-2 rounded-lg w-full aspect-video object-cover"
+                  />
                 )}
               </div>
             </div>
