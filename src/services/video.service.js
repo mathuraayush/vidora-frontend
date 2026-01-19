@@ -16,4 +16,18 @@ export const videoAPI = {
   incrementViews: async (videoId) => {
     await axiosInstance.post(`/videos/${videoId}/views`);
   },
+
+  uploadVideo: async (formData) => {
+  const res = await axiosInstance.post(
+    "/videos/upload",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+  return res.data;
+},
+
 };

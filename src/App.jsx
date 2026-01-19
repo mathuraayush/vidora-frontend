@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import ChannelPage from './pages/ChannelPage';
 import WatchHistoryPage from './pages/WatchHistoryPage';
 import SettingsPage from './pages/SettingsPage';
+import UploadVideo from './pages/UploadVideo';
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/trending" element={<HomePage />} />
-            
+
             {/* Protected Routes */}
             <Route
               path="/channel/:username"
@@ -75,6 +76,14 @@ function App() {
               }
             />
           </Route>
+          <Route
+            path="/upload"
+            element={
+              <ProtectedRoute>
+                <UploadVideo />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/" replace />} />
