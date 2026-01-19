@@ -1,24 +1,27 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 function VideoCard({ video }) {
   return (
-    <Link to={`/watch/${video._id}`}>
-      <Card className="hover:bg-accent transition">
-        <img
-          src={video.thumbnail}
-          alt={video.title}
-          className="w-full aspect-video rounded-t-md object-cover"
-        />
+    <Link to={`/watch/${video._id}`} className="group">
+      <div className="space-y-2">
+        {/* Thumbnail */}
+        <div className="relative overflow-hidden rounded-lg">
+          <img
+            src={video.thumbnail}
+            alt={video.title}
+            className="w-full aspect-video object-cover group-hover:scale-105 transition"
+          />
+        </div>
 
-        <CardContent className="flex gap-3 pt-3">
-          <Avatar>
+        {/* Info */}
+        <div className="flex gap-3">
+          <Avatar className="h-9 w-9">
             <AvatarImage src={video.owner.avatar} />
           </Avatar>
 
           <div className="space-y-1">
-            <h3 className="font-medium line-clamp-2">
+            <h3 className="font-medium leading-snug line-clamp-2">
               {video.title}
             </h3>
 
@@ -31,8 +34,8 @@ function VideoCard({ video }) {
               {new Date(video.createdAt).toLocaleDateString()}
             </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }
