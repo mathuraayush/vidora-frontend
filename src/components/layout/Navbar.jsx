@@ -1,3 +1,6 @@
+import { useTheme } from "next-themes";
+import { Sun, Moon, Laptop } from "lucide-react";
+
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser } from '../../store/slices/authSlice';
@@ -15,8 +18,14 @@ import {
 import { Search, PlayCircle, Upload, User, Settings, LogOut, Menu } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import ThemeToggle from "@/components/ThemeToggle";
+
+
+
 
 export default function Navbar({ onMenuToggle }) {
+  const { setTheme } = useTheme();
+
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,7 +53,7 @@ export default function Navbar({ onMenuToggle }) {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          
+
           <Link to="/" className="flex items-center gap-2">
             <PlayCircle className="h-8 w-8 text-primary" />
             <span className="font-bold text-xl hidden sm:inline">Vidora</span>
@@ -105,10 +114,30 @@ export default function Navbar({ onMenuToggle }) {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
+
+
+                  <DropdownMenuLabel>Theme</DropdownMenuLabel>
+
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    <Sun className="mr-2 h-4 w-4" />
+                    Light
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    <Moon className="mr-2 h-4 w-4" />
+                    Dark
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem onClick={() => setTheme("system")}>
+                    <Laptop className="mr-2 h-4 w-4" />
+                    System
+                  </DropdownMenuItem>
+
                   <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </DropdownMenuItem>
+
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
